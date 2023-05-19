@@ -28,7 +28,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 		setInputService(new AeneanInputServiceImplV3());
 	}
 
-	private void ViewPaint() {
+	private void viewPaint() {
 		view.paint();
 	}
 
@@ -100,14 +100,14 @@ public class AeneanServiceImplV3 implements AeneanService {
 	// Main화면 출력.
 	// 게임상태 >> GameReady로 변경.
 	private void processMain() {
-		ViewPaint();
+		viewPaint();
 		bjDto.setGameState(ipService.scanMainScreen());
 	}
 
 	// 게임결과를 화면출력.
 	// 게임상태 >> GameStand로 변경.
 	private void processGameResult() {
-		ViewPaint();
+		viewPaint();
 		try {
 			Thread.sleep(cardThreadSleep);
 		} catch (InterruptedException e) {
@@ -141,7 +141,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 	// 비어있는 테이블 출력.
 	// 게임상태 >> BETTING 으로 변경.
 	private void processGameReady() {
-		ViewPaint();
+		viewPaint();
 		bjDto.setGameState(GameState.BETTING);
 	}
 
@@ -149,7 +149,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 	// 1 ~ 5외의 숫자나 다른문자열은 1로처리.
 	// 게임상태 >> DISTRIBUTE로 변경.
 	private void processBetting() {
-		ViewPaint();
+		viewPaint();
 		int betMul = ipService.scanNumber(bjDto);
 		ScoreDto scDto = bjDto.getScoreDto();
 		scDto.setMul(betMul);
@@ -174,7 +174,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 				gameState = GameState.PLAYERSTAY;
 				break;
 			}
-			ViewPaint();
+			viewPaint();
 			if (player.getBustState() == IsBust.BUST) {
 				// 버스트 된정보를 표시.
 				bjDto.setBustPlayer(player.getBustState());
@@ -183,7 +183,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				ViewPaint();
+				viewPaint();
 				gameState = GameState.PLAYERISBUST;
 				break;
 			}
@@ -198,7 +198,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 		try {
 			bjDto.getDealer().openCard();
 			Thread.sleep(cardThreadSleep);
-			ViewPaint();
+			viewPaint();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -211,7 +211,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 		try {
 			bjDto.getDealer().openCard();
 			Thread.sleep(cardThreadSleep);
-			ViewPaint();
+			viewPaint();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -224,7 +224,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 		try {
 			bjDto.getDealer().openCard();
 			Thread.sleep(cardThreadSleep);
-			ViewPaint();
+			viewPaint();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -260,7 +260,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 		DealerDto dealer = bjDto.getDealer();
 		int gameState = GameState.DEALERREADY;
 		do {
-			ViewPaint();
+			viewPaint();
 			if (dealer.getScore17IsOver()) {
 				gameState = GameState.DEALER17OVER;
 				break;
@@ -271,7 +271,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				ViewPaint();
+				viewPaint();
 			}
 			if (dealer.getBustState() == IsBust.BUST) {
 				bjDto.setBustDealer(dealer.getBustState());
@@ -300,7 +300,7 @@ public class AeneanServiceImplV3 implements AeneanService {
 			} else {
 				userDealCard(bjDto.getPlayer());
 			}
-			ViewPaint();
+			viewPaint();
 			try {
 				Thread.sleep(cardThreadSleep);
 			} catch (InterruptedException e) {
